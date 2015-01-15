@@ -18,7 +18,7 @@ var highlight = (function(doc) {
         caseSensitive: false
       };
 
-  return function hightlight(o) {
+  return function highlight(o) {
     var regex;
 
     o = _.mixin({}, defaults, o);
@@ -32,9 +32,9 @@ var highlight = (function(doc) {
     o.pattern = _.isArray(o.pattern) ? o.pattern : [o.pattern];
 
     regex = getRegex(o.pattern, o.caseSensitive, o.wordsOnly);
-    traverse(o.node, hightlightTextNode);
+    traverse(o.node, highlightTextNode);
 
-    function hightlightTextNode(textNode) {
+    function highlightTextNode(textNode) {
       var match, patternNode, wrapperNode;
 
       if (match = regex.exec(textNode.data)) {
@@ -51,18 +51,18 @@ var highlight = (function(doc) {
       return !!match;
     }
 
-    function traverse(el, hightlightTextNode) {
+    function traverse(el, highlightTextNode) {
       var childNode, TEXT_NODE_TYPE = 3;
 
       for (var i = 0; i < el.childNodes.length; i++) {
         childNode = el.childNodes[i];
 
         if (childNode.nodeType === TEXT_NODE_TYPE) {
-          i += hightlightTextNode(childNode) ? 1 : 0;
+          i += highlightTextNode(childNode) ? 1 : 0;
         }
 
         else {
-          traverse(childNode, hightlightTextNode);
+          traverse(childNode, highlightTextNode);
         }
       }
     }
